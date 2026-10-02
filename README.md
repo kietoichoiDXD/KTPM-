@@ -1,216 +1,391 @@
 # 🎓 HỆ THỐNG QUẢN LÝ SINH VIÊN - BACKEND API
 
-<div align="center">
-
 ![Node.js](https://img.shields.io/badge/Node.js-18.x-green)
 ![Express](https://img.shields.io/badge/Express-4.x-blue)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
 ![JWT](https://img.shields.io/badge/JWT-Auth-orange)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-**Hệ thống Backend hoàn chỉnh cho quản lý sinh viên, khóa học, điểm số, điểm danh và nhiều tính năng nâng cao**
+**Hệ thống Backend RESTful API cho quản lý sinh viên, khóa học, điểm số, điểm danh và các chức năng quản trị liên quan.**
 
 [Demo](#) • [Tài liệu API](./COMPLETE_API_DOCUMENTATION.md) • [Hướng dẫn Postman](./POSTMAN_GUIDE.md)
-
-</div>
 
 ---
 
 ## 📋 Mục lục
 
-- [Giới thiệu](#-giới-thiệu)
-- [Tính năng](#-tính-năng-chính)
-- [Tech Stack](#-tech-stack)
-- [Cấu trúc dự án](#-cấu-trúc-dự-án)
-- [Cài đặt](#-cài-đặt)
-- [API Endpoints](#-api-endpoints)
-- [Screenshots](#-screenshots)
-- [Deployment](#-deployment)
-- [Tác giả](#-tác-giả)
+* [Giới thiệu](#-giới-thiệu)
+* [Tính năng chính](#-tính-năng-chính)
+* [Tech Stack](#-tech-stack)
+* [Cấu trúc dự án](#-cấu-trúc-dự-án)
+* [Cài đặt](#-cài-đặt)
+* [API Endpoints](#-api-endpoints)
+* [Authentication Flow](#-authentication-flow)
+* [Student API](#-student-api)
+* [Testing](#-testing)
+* [Deployment](#-deployment)
+* [Screenshots](#-screenshots)
+* [Checklist](#-checklist)
+* [Mở rộng](#-mở-rộng)
+* [Tác giả](#-tác-giả)
 
 ---
 
 ## 🎯 Giới thiệu
 
-Dự án Backend RESTful API hoàn chỉnh được xây dựng bằng Node.js + Express + MongoDB, phục vụ cho hệ thống quản lý sinh viên với đầy đủ các tính năng:
+Đây là hệ thống **RESTful Backend API quản lý sinh viên** được xây dựng bằng:
 
-- 🔐 **Authentication & Authorization** - JWT, phân quyền USER/ADMIN
-- 👨‍🎓 **Quản lý sinh viên** - CRUD, upload ảnh, soft delete
-- 📚 **Quản lý khóa học** - CRUD, quản lý sinh viên trong khóa học
-- 📝 **Quản lý điểm** - Nhập điểm, tự động tính GPA, xếp loại
-- ✅ **Điểm danh** - Theo dõi tỷ lệ tham gia
-- 🔔 **Thông báo** - Hệ thống notification
-- 📊 **Thống kê & Analytics** - Dashboard, báo cáo, xu hướng
-- 🔍 **Tìm kiếm nâng cao** - Search toàn cục, filter
-- 📥 **Export dữ liệu** - CSV, JSON
-- 💾 **Backup & Restore** - Sao lưu database
-- 🏥 **Health Check** - Giám sát hệ thống
+* Node.js
+* Express.js
+* MongoDB Atlas
+* Mongoose
+* JWT Authentication
+
+Hệ thống được thiết kế theo mô hình MVC và cung cấp các chức năng quản lý dữ liệu sinh viên, xác thực người dùng, phân quyền, tìm kiếm, phân trang và validation dữ liệu.
+
+### Các nhóm chức năng
+
+* 🔐 **Authentication & Authorization**
+
+  * JWT Authentication
+  * Phân quyền USER/ADMIN
+  * Password hashing
+
+* 👨‍🎓 **Student Management**
+
+  * CRUD sinh viên
+  * Upload ảnh
+  * Soft Delete
+  * Pagination
+  * Search
+  * Sort
+  * Validation
+
+* 📚 **Course Management**
+
+  * CRUD khóa học
+  * Quản lý sinh viên trong khóa học
+
+* 📝 **Grade Management**
+
+  * Nhập điểm
+  * Tính điểm trung bình
+  * Tính GPA
+  * Xếp loại
+
+* ✅ **Attendance Tracking**
+
+  * Điểm danh
+  * Thống kê tỷ lệ tham gia
+
+* 🔔 **Notification**
+
+  * Quản lý thông báo
+
+* 📊 **Statistics & Analytics**
+
+  * Dashboard
+  * Thống kê sinh viên
+  * Thống kê khóa học
+  * Phân tích dữ liệu
+
+* 🔍 **Advanced Features**
+
+  * Global Search
+  * Filter
+  * Export CSV/JSON
+  * Backup & Restore
+  * Health Check
+  * Performance Monitoring
+  * Request Logging
+
+---
 
 ## ✨ Tính năng chính
 
 ### 🔐 Authentication & Security
-- ✅ JWT Authentication
-- ✅ Role-based Authorization (USER/ADMIN)
-- ✅ Password hashing (bcrypt)
-- ✅ Rate Limiting
-- ✅ Security Headers
-- ✅ Input Sanitization
+
+* [x] JWT Authentication
+* [x] Role-based Authorization
+* [x] USER / ADMIN
+* [x] Password hashing với bcrypt
+* [x] Rate Limiting
+* [x] Security Headers
+* [x] Input Sanitization
+* [x] Authentication Middleware
+* [x] Role Middleware
 
 ### 👨‍🎓 Student Management
-- ✅ CRUD sinh viên đầy đủ
-- ✅ Upload ảnh đại diện (Multer)
-- ✅ Soft Delete (có thể khôi phục)
-- ✅ Phân trang, tìm kiếm, sắp xếp
-- ✅ Validation dữ liệu
+
+* [x] Create Student
+* [x] Get Students
+* [x] Get Student by ID
+* [x] Update Student
+* [x] Delete Student
+* [x] Upload Avatar
+* [x] Soft Delete
+* [x] Pagination
+* [x] Search
+* [x] Sort
+* [x] Input Validation
+* [x] Error Handling
 
 ### 📚 Course Management
-- ✅ CRUD khóa học
-- ✅ Quản lý sinh viên trong khóa học
-- ✅ Thêm/xóa sinh viên khỏi khóa học
+
+* [x] CRUD khóa học
+* [x] Quản lý sinh viên trong khóa học
+* [x] Thêm sinh viên vào khóa học
+* [x] Xóa sinh viên khỏi khóa học
 
 ### 📝 Grade Management
-- ✅ Nhập điểm giữa kỳ / cuối kỳ
-- ✅ Tự động tính điểm trung bình
-- ✅ Xếp loại (A, B+, B, C+, C, D+, D, F)
-- ✅ Xem bảng điểm (Transcript)
-- ✅ Tính GPA tự động
+
+* [x] Nhập điểm
+* [x] Điểm giữa kỳ
+* [x] Điểm cuối kỳ
+* [x] Tính điểm trung bình
+* [x] Tính GPA
+* [x] Xếp loại
+* [x] Transcript
 
 ### ✅ Attendance Tracking
-- ✅ Điểm danh (Có mặt/Vắng/Muộn/Có phép)
-- ✅ Thống kê tỷ lệ điểm danh
-- ✅ Lọc theo sinh viên/khóa học/ngày
+
+* [x] Có mặt
+* [x] Vắng
+* [x] Muộn
+* [x] Có phép
+* [x] Thống kê tỷ lệ điểm danh
+* [x] Filter theo sinh viên
+* [x] Filter theo khóa học
+* [x] Filter theo ngày
 
 ### 📊 Statistics & Analytics
-- ✅ Dashboard tổng quan
-- ✅ Thống kê sinh viên, khóa học
-- ✅ Phân tích độ tuổi
-- ✅ Xu hướng tăng trưởng
-- ✅ Top khóa học phổ biến
+
+* [x] Dashboard tổng quan
+* [x] Thống kê sinh viên
+* [x] Thống kê khóa học
+* [x] Phân tích độ tuổi
+* [x] Xu hướng tăng trưởng
+* [x] Top khóa học phổ biến
 
 ### 🔍 Advanced Features
-- ✅ Tìm kiếm toàn cục
-- ✅ Export CSV/JSON
-- ✅ Backup & Restore
-- ✅ Notifications
-- ✅ Performance Monitoring
-- ✅ Request Logging
-- ✅ Health Check
+
+* [x] Global Search
+* [x] Filter
+* [x] Export CSV
+* [x] Export JSON
+* [x] Backup & Restore
+* [x] Notifications
+* [x] Performance Monitoring
+* [x] Request Logging
+* [x] Health Check
+
+---
 
 ## 🧠 Tech Stack
 
-**Backend:**
-- Node.js 18.x
-- Express.js 4.x
-- MongoDB Atlas
-- Mongoose ODM
+### Backend
 
-**Authentication:**
-- JWT (jsonwebtoken)
-- bcryptjs
+| Công nghệ     | Phiên bản / Vai trò |
+| ------------- | ------------------- |
+| Node.js       | 18.x                |
+| Express.js    | 4.x                 |
+| MongoDB Atlas | Database            |
+| Mongoose      | ODM                 |
 
-**File Upload:**
-- Multer
+### Authentication
 
-**Validation:**
-- express-validator
+| Công nghệ      | Vai trò          |
+| -------------- | ---------------- |
+| JSON Web Token | Authentication   |
+| bcryptjs       | Password hashing |
 
-**Security:**
-- helmet (security headers)
-- cors
-- rate-limiter
+### File Upload
 
-**Development:**
-- nodemon
-- dotenv
+* Multer
 
-## 🗂 Cấu trúc thư mục
-```
+### Validation
+
+* express-validator
+
+### Security
+
+* Helmet
+* CORS
+* Rate Limiter
+* Input Sanitization
+
+### Development
+
+* Nodemon
+* dotenv
+
+---
+
+## 🗂 Cấu trúc dự án
+
+```text
 backend/
 ├── controllers/
 │   ├── auth.controller.js
 │   └── student.controller.js
+│
 ├── middlewares/
 │   ├── auth.middleware.js
 │   ├── role.middleware.js
 │   ├── upload.middleware.js
 │   └── error.middleware.js
+│
 ├── models/
 │   ├── user.model.js
 │   └── student.model.js
+│
 ├── routes/
 │   ├── auth.routes.js
 │   └── student.routes.js
+│
 ├── validators/
 │   └── auth.validator.js
+│
 ├── uploads/
 │   └── images/
+│
 ├── .env
 ├── index.js
 ├── package.json
 └── README.md
 ```
 
+> **Lưu ý:** Cấu trúc trên phản ánh phần backend được mô tả hiện tại. Nếu Course, Grade, Attendance, Notification hoặc Analytics đã được triển khai trong source code, nên bổ sung controller/model/route tương ứng vào README để tài liệu khớp với implementation thực tế.
+
+---
+
 ## ⚙️ Cài đặt
 
 ### 1. Clone project
+
 ```bash
-git clone <repository-url>
-cd backend
+git clone <YOUR_REPOSITORY_URL>
+cd quanlysinhvienbackendapi
 ```
 
 ### 2. Cài đặt dependencies
+
 ```bash
 npm install
 ```
 
-### 3. Cấu hình .env
-Tạo file `.env` và cấu hình:
+### 3. Cấu hình `.env`
+
+Tạo file `.env`:
+
 ```env
 PORT=5000
+
 MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/student_db
+
 JWT_SECRET=your_secret_key_here
 ```
 
-### 4. Tạo MongoDB Atlas
-1. Truy cập https://www.mongodb.com/cloud/atlas
-2. Tạo cluster miễn phí
-3. Tạo database user
-4. Lấy connection string
-5. Thay vào `MONGO_URI` trong file `.env`
+> Không commit file `.env` lên GitHub.
 
-### 5. Chạy server
+Nên thêm `.env` vào `.gitignore`:
+
+```gitignore
+node_modules/
+.env
+uploads/
+*.log
+```
+
+---
+
+## 🗄️ MongoDB Atlas
+
+### Bước 1
+
+Truy cập MongoDB Atlas:
+
+https://www.mongodb.com/cloud/atlas
+
+### Bước 2
+
+Tạo một MongoDB Cluster.
+
+### Bước 3
+
+Tạo Database User.
+
+### Bước 4
+
+Lấy MongoDB Connection String.
+
+### Bước 5
+
+Đặt connection string vào:
+
+```env
+MONGO_URI=your_mongodb_connection_string
+```
+
+---
+
+## ▶️ Chạy server
+
+### Development
+
 ```bash
-npm start
-# hoặc dùng nodemon để auto-reload
 npm run dev
 ```
 
-Server sẽ chạy tại: `http://localhost:5000`
+### Production
 
-## 📋 API Endpoints
+```bash
+npm start
+```
 
-### Authentication
-| Method | Endpoint | Mô tả | Quyền |
-|--------|----------|-------|-------|
-| POST | `/auth/register` | Đăng ký tài khoản | Public |
-| POST | `/auth/login` | Đăng nhập | Public |
+Server mặc định:
 
-### Students
-| Method | Endpoint | Mô tả | Quyền |
-|--------|----------|-------|-------|
-| GET | `/students` | Lấy danh sách | USER |
-| GET | `/students/:id` | Lấy chi tiết | USER |
-| POST | `/students` | Tạo mới | ADMIN |
-| PUT | `/students/:id` | Cập nhật | ADMIN |
-| DELETE | `/students/:id` | Xóa | ADMIN |
+```text
+http://localhost:5000
+```
 
-## 🔐 Authentication Flow
+---
 
-### 1. Đăng ký
+# 📋 API Endpoints
+
+## 🔐 Authentication
+
+| Method | Endpoint         | Mô tả             | Quyền  |
+| ------ | ---------------- | ----------------- | ------ |
+| POST   | `/auth/register` | Đăng ký tài khoản | Public |
+| POST   | `/auth/login`    | Đăng nhập         | Public |
+
+---
+
+## 👨‍🎓 Students
+
+| Method | Endpoint        | Mô tả                   | Quyền |
+| ------ | --------------- | ----------------------- | ----- |
+| GET    | `/students`     | Lấy danh sách sinh viên | USER  |
+| GET    | `/students/:id` | Lấy chi tiết sinh viên  | USER  |
+| POST   | `/students`     | Tạo sinh viên           | ADMIN |
+| PUT    | `/students/:id` | Cập nhật sinh viên      | ADMIN |
+| DELETE | `/students/:id` | Xóa sinh viên           | ADMIN |
+
+---
+
+# 🔐 Authentication Flow
+
+## 1. Đăng ký
+
 ```http
 POST /auth/register
 Content-Type: application/json
+```
 
+Request:
+
+```json
 {
   "username": "admin",
   "password": "123456",
@@ -218,11 +393,18 @@ Content-Type: application/json
 }
 ```
 
-### 2. Đăng nhập
+---
+
+## 2. Đăng nhập
+
 ```http
 POST /auth/login
 Content-Type: application/json
+```
 
+Request:
+
+```json
 {
   "username": "admin",
   "password": "123456"
@@ -230,6 +412,7 @@ Content-Type: application/json
 ```
 
 Response:
+
 ```json
 {
   "message": "Đăng nhập thành công",
@@ -242,37 +425,66 @@ Response:
 }
 ```
 
-### 3. Sử dụng token
-Thêm vào header của các request:
-```
-Authorization: Bearer <token>
+---
+
+## 3. Sử dụng JWT Token
+
+Các API yêu cầu authentication cần gửi header:
+
+```http
+Authorization: Bearer <YOUR_TOKEN>
 ```
 
-## 📂 CRUD Students
+Ví dụ:
 
-### Lấy danh sách (có phân trang, tìm kiếm)
+```http
+GET /students
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+```
+
+---
+
+# 👨‍🎓 Student API
+
+## GET danh sách sinh viên
+
+API hỗ trợ:
+
+* Pagination
+* Search
+* Sort
+
+Ví dụ:
+
 ```http
 GET /students?page=1&limit=10&search=nguyen&sort=age&order=asc
-Authorization: Bearer <token>
 ```
 
 Response:
+
 ```json
 {
   "page": 1,
   "limit": 10,
   "total": 25,
   "totalPages": 3,
-  "data": [...]
+  "data": []
 }
 ```
 
-### Tạo sinh viên mới (với upload ảnh)
+---
+
+## POST tạo sinh viên
+
 ```http
 POST /students
-Authorization: Bearer <token>
+Authorization: Bearer <YOUR_TOKEN>
 Content-Type: multipart/form-data
+```
 
+Form data:
+
+```text
 name: Nguyen Van A
 age: 20
 email: nguyenvana@email.com
@@ -280,227 +492,334 @@ phone: 0123456789
 avatar: [file]
 ```
 
-### Cập nhật sinh viên
+---
+
+## PUT cập nhật sinh viên
+
 ```http
 PUT /students/:id
-Authorization: Bearer <token>
+Authorization: Bearer <YOUR_TOKEN>
 Content-Type: multipart/form-data
+```
 
+Ví dụ:
+
+```text
 name: Nguyen Van B
 age: 21
 avatar: [file]
 ```
 
-### Xóa sinh viên
+---
+
+## DELETE sinh viên
+
 ```http
 DELETE /students/:id
-Authorization: Bearer <token>
+Authorization: Bearer <YOUR_TOKEN>
 ```
 
-## 🌍 Deploy lên Render
+---
+
+# 🧪 Testing
+
+Testing là phần trọng tâm của đồ án **Kiểm thử phần mềm**.
+
+## Functional Testing
+
+Các nhóm kiểm thử:
+
+* Authentication
+* Student CRUD
+* Input Validation
+* Pagination
+* Search
+* Sort
+* Authorization
+* Error Handling
+
+### Kỹ thuật kiểm thử
+
+* Equivalence Partitioning
+* Boundary Value Analysis
+* Decision Table Testing
+* Error Guessing
+* Exploratory Testing
+* Risk-based Testing
+
+---
+
+## 🔄 Regression Testing
+
+Có thể sử dụng:
+
+```text
+Postman
+   ↓
+Collection
+   ↓
+Newman
+   ↓
+Automated Test
+   ↓
+HTML Report
+```
+
+---
+
+## ⚡ Performance Testing
+
+Có thể sử dụng:
+
+* Apache JMeter
+* k6
+
+Các loại kiểm thử:
+
+### Load Testing
+
+Đánh giá hệ thống dưới tải người dùng bình thường.
+
+### Stress Testing
+
+Tăng dần tải để xác định giới hạn của hệ thống.
+
+### Volume Testing
+
+Kiểm tra hệ thống với lượng dữ liệu lớn.
+
+Ví dụ:
+
+```text
+10,000+ students
+```
+
+Các metrics cần theo dõi:
+
+```text
+Response Time
+Average Response Time
+P95
+P99
+Throughput
+Error Rate
+Concurrent Users
+```
+
+---
+
+# 🌍 Deployment
+
+## Render
 
 ### 1. Push code lên GitHub
+
 ```bash
-git init
 git add .
 git commit -m "Initial commit"
-git remote add origin <your-repo-url>
 git push -u origin main
 ```
 
-### 2. Deploy trên Render
-1. Truy cập https://render.com
-2. Tạo Web Service mới
-3. Connect GitHub repository
-4. Cấu hình:
-   - **Build Command**: `npm install`
-   - **Start Command**: `npm start`
-5. Thêm Environment Variables:
-   - `PORT`
-   - `MONGO_URI`
-   - `JWT_SECRET`
-6. Deploy!
+### 2. Tạo Web Service
 
-## 🧪 Test với Postman
+Trên Render:
 
-1. Import collection hoặc tạo requests thủ công
-2. Test flow:
-   - Đăng ký user
-   - Đăng nhập → lấy token
-   - Thêm token vào Authorization header
-   - Test các API CRUD
-
-## ✅ Checklist hoàn thành
-
-- [x] REST API
-- [x] MVC Pattern
-- [x] MongoDB Atlas
-- [x] JWT Authentication
-- [x] Role Authorization (USER/ADMIN)
-- [x] CRUD Operations
-- [x] Upload File (Multer)
-- [x] Pagination + Search + Sort
-- [x] Validation
-- [x] Error Handling
-- [x] Sẵn sàng deploy
-
-## 🚀 Mở rộng
-
-Có thể kết hợp với:
-- Frontend: React, Vue, Angular
-- Mobile: React Native, Flutter
-- Thêm tính năng: Email verification, Password reset, Refresh token
-
-## 📝 Ghi chú
-
-- Role mặc định khi đăng ký là `USER`
-- Để tạo ADMIN, set `role: "ADMIN"` khi register
-- File upload giới hạn 5MB
-- Token hết hạn sau 7 ngày
-
-## 👨‍💻 Tác giả
-
-Dự án Backend hoàn chỉnh cho đồ án KTPM
-
----
-**Chúc bạn thành công với dự án! 🎉**
-
-
----
-
-## 📊 Screenshots
-
-### 1. API Documentation (Postman)
-> Chụp màn hình Postman với các request thành công
-
-### 2. MongoDB Atlas Dashboard
-> Chụp màn hình database trên MongoDB Atlas
-
-### 3. Server Running
-> Chụp màn hình terminal khi server chạy thành công
-
-### 4. API Response Examples
-> Chụp màn hình các response từ API
-
----
-
-## 🎨 Hướng dẫn chụp ảnh cho GitHub
-
-### Ảnh 1: Cấu trúc thư mục
-```bash
-# Chụp cấu trúc thư mục trong VS Code
+```text
+New
+ ↓
+Web Service
+ ↓
+Connect GitHub Repository
 ```
 
-### Ảnh 2: Postman - Đăng nhập thành công
-```
-POST /auth/login
-Response: token + user info
-```
-
-### Ảnh 3: Postman - Lấy danh sách sinh viên
-```
-GET /students?page=1&limit=10
-Response: paginated data
-```
-
-### Ảnh 4: Postman - Tạo sinh viên (ADMIN)
-```
-POST /students
-Response: success message
-```
-
-### Ảnh 5: Postman - Thống kê Dashboard
-```
-GET /stats/dashboard
-Response: overview statistics
-```
-
-### Ảnh 6: MongoDB Atlas - Collections
-```
-Hiển thị các collections: users, students, courses, grades, attendance
-```
-
-### Ảnh 7: Server Console
-```
-✅ MongoDB connected successfully
-🚀 Server running on port 5000
-```
-
-### Ảnh 8: Health Check
-```
-GET /health
-Response: system info
-```
-
----
-
-## 📸 Checklist ảnh cần chụp
-
-- [ ] Cấu trúc thư mục dự án (VS Code Explorer)
-- [ ] Server running successfully (Terminal)
-- [ ] MongoDB Atlas Dashboard
-- [ ] Postman - Register/Login
-- [ ] Postman - CRUD Students
-- [ ] Postman - CRUD Courses
-- [ ] Postman - Grade Management
-- [ ] Postman - Attendance
-- [ ] Postman - Statistics Dashboard
-- [ ] Postman - Export CSV
-- [ ] Health Check Response
-- [ ] Performance Stats
-
----
-
-## 🚀 Quick Start
+### 3. Build Command
 
 ```bash
-# Clone repository
-git clone <your-repo-url>
-cd backend
-
-# Install dependencies
 npm install
+```
 
-# Setup .env file
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
+### 4. Start Command
 
-# Run server
+```bash
 npm start
 ```
 
+### 5. Environment Variables
+
+```text
+PORT
+MONGO_URI
+JWT_SECRET
+```
+
 ---
 
-## 📝 License
+# 📸 Screenshots
 
-MIT License - Dự án mã nguồn mở
+README nên bổ sung screenshots thực tế của project.
+
+## 1. Project Structure
+
+Screenshot VS Code Explorer:
+
+```text
+backend/
+├── controllers/
+├── middlewares/
+├── models/
+├── routes/
+└── validators/
+```
+
+## 2. Server Running
+
+Ví dụ:
+
+```text
+MongoDB connected successfully
+Server running on port 5000
+```
+
+## 3. Postman - Login
+
+```text
+POST /auth/login
+```
+
+Hiển thị:
+
+```text
+200 OK
+token
+user
+role
+```
+
+## 4. Postman - Student List
+
+```text
+GET /students?page=1&limit=10
+```
+
+## 5. Postman - Create Student
+
+```text
+POST /students
+```
+
+## 6. MongoDB Atlas
+
+Hiển thị các collections thực tế của project.
+
+## 7. Health Check
+
+```http
+GET /health
+```
 
 ---
 
-## 👨‍💻 Tác giả
+# ✅ Checklist
 
-**Tên của bạn**
-- GitHub: [@your-username](https://github.com/your-username)
-- Email: your.email@example.com
+## Backend
+
+* [x] REST API
+* [x] MVC Pattern
+* [x] MongoDB Atlas
+* [x] JWT Authentication
+* [x] Role Authorization
+* [x] CRUD Operations
+* [x] Upload File
+* [x] Pagination
+* [x] Search
+* [x] Sort
+* [x] Validation
+* [x] Error Handling
+
+## Testing
+
+* [ ] Functional Test Cases
+* [ ] Equivalence Partitioning
+* [ ] Boundary Value Analysis
+* [ ] Decision Table
+* [ ] Error Guessing
+* [ ] Exploratory Testing
+* [ ] Regression Testing
+* [ ] Postman Collection
+* [ ] Newman Automation
+* [ ] JMeter Load Testing
+* [ ] JMeter Stress Testing
+* [ ] Volume Testing
+* [ ] Performance Report
+
+## Documentation
+
+* [ ] API Documentation
+* [ ] Postman Guide
+* [ ] Test Case Document
+* [ ] Defect Report
+* [ ] Performance Report
+* [ ] Screenshots
+* [ ] Deployment Documentation
+
+---
+
+# 🚀 Mở rộng
+
+Các tính năng có thể phát triển thêm:
+
+* Email Verification
+* Password Reset
+* Refresh Token
+* Two-Factor Authentication
+* Advanced Search
+* Advanced Filtering
+* Audit Logging
+* API Versioning
+* Docker
+* CI/CD
+* Automated Regression Testing
+* Performance Monitoring
+
+---
+
+# 📝 Ghi chú
+
+* Role mặc định khi đăng ký là `USER`.
+* ADMIN có quyền thực hiện các thao tác quản trị sinh viên.
+* File upload giới hạn 5MB.
+* JWT token hết hạn sau 7 ngày.
+
+Các thông tin trên cần được đối chiếu với cấu hình thực tế trong source code trước khi xem là thông số chính thức của hệ thống.
+
+---
+
+# 👨‍💻 Tác giả
+
+**KTPM - Student Management API**
+
+GitHub:
+
+`https://github.com/kietoichoiDXD`
+
+---
+
+# 📄 License
+
+MIT License
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Node.js Community
-- Express.js
-- MongoDB
-- Postman
+* Node.js Community
+* Express.js
+* MongoDB
+* Postman
+* Apache JMeter
 
 ---
 
-<div align="center">
+⭐ Nếu project hữu ích, hãy star repository!
 
-**⭐ Nếu thấy dự án hữu ích, hãy cho một star nhé! ⭐**
-
-Made with ❤️ by [Your Name]
-
-</div>
-#   K T P M -  
- 
+**Made with ❤️ for Software Testing Course**
