@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+:root {
+  --color-primary-50: oklch(0.97 0.013 262);
+  --color-primary-100: oklch(0.93 0.032 262);
+  --color-primary-500: oklch(0.58 0.2 262);
+  --color-primary-600: oklch(0.5 0.2 262);
+}
+
+.sidebar-nav-item {
+  @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 no-underline;
+}
+.sidebar-nav-item.active {
+  @apply bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300;
+}
+.sidebar-nav-item:not(.active) {
+  @apply text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800;
+}
