@@ -32,9 +32,11 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Verify all routes load
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET || 'temporary_ci_verify_token' }}
         run: |
           node -e "
-          process.env.JWT_SECRET = 'test_secret_for_ci';
+          process.env.JWT_SECRET = process.env.JWT_SECRET;
           process.env.MONGO_URI = '';
           process.env.PORT = '5000';
           const routes = ['auth','student','course','grade','attendance','stats','analytics','notification','profile'];
@@ -69,7 +71,7 @@ jobs:
       - name: Build Nuxt app
         run: npm run build
         env:
-          NUXT_PUBLIC_API_BASE: ${{ secrets.NUXT_PUBLIC_API_BASE || 'https://ktpm-backend.railway.app' }}
+          NUXT_PUBLIC_API_BASE: ${{ secrets.NUXT_PUBLIC_API_BASE }}
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
