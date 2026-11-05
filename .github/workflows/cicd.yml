@@ -76,6 +76,7 @@ jobs:
         with:
           name: nuxt-build-${{ github.sha }}
           path: frontend/.output/
+          include-hidden-files: true
           retention-days: 7
 
   # ==========================================
