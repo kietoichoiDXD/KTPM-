@@ -45,3 +45,6 @@ Thumbs.db
 .nitro/
 .cache/
 dist/
+
+# Temporary In-Memory MongoDB data
+.tmp_mongo_db/

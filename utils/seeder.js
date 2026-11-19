@@ -23,48 +23,60 @@ async function seedInitialData() {
     const admin = await User.create({
       username: 'admin',
       password: hashedPasswordAdmin,
-      role: 'ADMIN'
+      role: 'ADMIN',
+      status: 'ACTIVE'
     });
 
     const user = await User.create({
       username: 'user',
       password: hashedPasswordUser,
-      role: 'USER'
+      role: 'USER',
+      status: 'ACTIVE'
     });
 
-    // 2. Tạo Students
+    // 2. Tạo Students (gắn studentCode và liên kết 2 chiều với user)
     const students = await Student.create([
       {
         name: 'Nguyễn Văn An',
+        studentCode: 'SV001',
         age: 20,
         email: 'nguyenvanan@ued.udn.vn',
-        phone: '0905123456'
+        phone: '0905123456',
+        user: user._id
       },
       {
         name: 'Trần Thị Bích',
+        studentCode: 'SV002',
         age: 21,
         email: 'tranthibich@ued.udn.vn',
         phone: '0905234567'
       },
       {
         name: 'Lê Hoàng Cường',
+        studentCode: 'SV003',
         age: 20,
         email: 'lehoangcuong@ued.udn.vn',
         phone: '0905345678'
       },
       {
         name: 'Phạm Thu Dung',
+        studentCode: 'SV004',
         age: 22,
         email: 'phamthudung@ued.udn.vn',
         phone: '0905456789'
       },
       {
         name: 'Đặng Tuấn Kiệt',
+        studentCode: 'SV005',
         age: 21,
         email: 'dangtuankiet@ued.udn.vn',
         phone: '0905567890'
       }
     ]);
+
+    // Hoàn tất liên kết hai chiều cho user
+    user.student = students[0]._id;
+    await user.save();
 
     // 3. Tạo Courses
     const courses = await Course.create([
@@ -139,7 +151,7 @@ async function seedInitialData() {
 
     console.log('✅ Khởi tạo dữ liệu mẫu thành công!');
     console.log('🔑 Tài khoản quản trị mặc định: username = "admin", password = "admin123" (Role: ADMIN)');
-    console.log('🔑 Tài khoản sinh viên mặc định: username = "user", password = "user123" (Role: USER)');
+    console.log('🔑 Tài khoản sinh viên mặc định: username = "user", password = "user123" (Role: USER, Liên kết: Nguyễn Văn An - SV001)');
   } catch (err) {
     console.error('❌ Lỗi khởi tạo dữ liệu mẫu:', err);
   }

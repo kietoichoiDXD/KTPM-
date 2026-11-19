@@ -2,7 +2,14 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: 'Token không tồn tại' });
+    }
+
+    const token = authHeader.startsWith('Bearer ')
+      ? authHeader.slice(7).trim()
+      : authHeader.split(' ')[1];
     
     if (!token) {
       return res.status(401).json({ message: 'Token không tồn tại' });

@@ -26,7 +26,8 @@ exports.register = async (req, res) => {
     const user = new User({
       username,
       password: hashedPassword,
-      role: role || 'USER'
+      role: role || 'USER',
+      status: 'ACTIVE'
     });
 
     await user.save();
@@ -36,7 +37,9 @@ exports.register = async (req, res) => {
       user: {
         id: user._id,
         username: user.username,
-        role: user.role
+        role: user.role,
+        status: user.status,
+        student: user.student
       }
     });
   } catch (error) {
@@ -55,9 +58,14 @@ exports.login = async (req, res) => {
     const { username, password } = req.body;
 
     // Tìm user
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username }).populate('student', 'name studentCode email phone avatar');
     if (!user) {
       return res.status(401).json({ message: 'Username hoặc password không đúng' });
+    }
+
+    // Kiểm tra tài khoản bị khóa
+    if (user.status === 'LOCKED' || user.status === 'INACTIVE') {
+      return res.status(403).json({ message: 'Tài khoản của bạn đã bị vô hiệu hóa hoặc bị khóa' });
     }
 
     // Kiểm tra password
@@ -79,7 +87,9 @@ exports.login = async (req, res) => {
       user: {
         id: user._id,
         username: user.username,
-        role: user.role
+        role: user.role,
+        status: user.status,
+        student: user.student
       }
     });
   } catch (error) {

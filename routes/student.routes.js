@@ -4,7 +4,11 @@ const studentController = require('../controllers/student.controller');
 const authMiddleware = require('../middlewares/auth.middleware');
 const roleMiddleware = require('../middlewares/role.middleware');
 const upload = require('../middlewares/upload.middleware');
-const { createStudentValidator, updateStudentValidator } = require('../validators/student.validator');
+const { 
+  createStudentValidator, 
+  updateStudentValidator,
+  updateMeValidator 
+} = require('../validators/student.validator');
 const { validationResult } = require('express-validator');
 
 // Middleware kiểm tra validation
@@ -15,6 +19,20 @@ const validate = (req, res, next) => {
   }
   next();
 };
+
+// GET /students/me - Lấy thông tin sinh viên của chính tài khoản đang đăng nhập (USER / ADMIN)
+// Đặt trước /:id để tránh conflict param!
+router.get('/me', authMiddleware, studentController.getMyProfile);
+
+// PUT /students/me - Sinh viên tự cập nhật thông tin cá nhân (phone, email, avatar)
+// Đặt trước /:id để tránh conflict param!
+router.put('/me', 
+  authMiddleware, 
+  upload.single('avatar'), 
+  updateMeValidator, 
+  validate, 
+  studentController.updateMyProfile
+);
 
 // GET /students - Lấy danh sách (USER có thể xem)
 router.get('/', authMiddleware, studentController.getStudents);

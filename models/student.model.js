@@ -11,6 +11,12 @@ const studentSchema = new mongoose.Schema({
     required: true,
     min: 1
   },
+  studentCode: {
+    type: String,
+    unique: true,
+    sparse: true,
+    trim: true
+  },
   avatar: {
     type: String,
     default: null
@@ -22,6 +28,11 @@ const studentSchema = new mongoose.Schema({
   phone: {
     type: String,
     trim: true
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null
   },
   isDeleted: {
     type: Boolean,

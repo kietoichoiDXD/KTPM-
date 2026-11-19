@@ -4,7 +4,9 @@ const bcrypt = require('bcryptjs');
 // Lấy thông tin profile
 exports.getProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id)
+      .select('-password')
+      .populate('student');
     
     if (!user) {
       return res.status(404).json({ message: 'Không tìm thấy user' });
@@ -37,7 +39,9 @@ exports.updateProfile = async (req, res) => {
       req.user.id,
       { username },
       { new: true, runValidators: true }
-    ).select('-password');
+    )
+      .select('-password')
+      .populate('student');
 
     res.json({
       message: 'Cập nhật profile thành công',

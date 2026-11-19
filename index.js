@@ -40,7 +40,9 @@ const apiDocsHandler = (req, res) => {
     version: '4.0',
     features: [
       'Authentication & Authorization',
+      'User Management & Role-Based Access Control (RBAC)',
       'Student & Course Management',
+      'Personal Student Profile (Student-User Linkage)',
       'Attendance Tracking',
       'Grade Management',
       'Statistics & Analytics',
@@ -54,6 +56,7 @@ const apiDocsHandler = (req, res) => {
     endpoints: {
       auth: '/auth',
       profile: '/profile',
+      users: '/users',
       students: '/students',
       courses: '/courses',
       attendance: '/attendance',
@@ -83,6 +86,7 @@ app.get('/', (req, res, next) => {
 // Routes
 app.use('/auth', require('./routes/auth.routes'));
 app.use('/profile', require('./routes/profile.routes'));
+app.use('/users', require('./routes/user.routes'));
 app.use('/students', require('./routes/student.routes'));
 app.use('/courses', require('./routes/course.routes'));
 app.use('/attendance', require('./routes/attendance.routes'));

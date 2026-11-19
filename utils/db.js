@@ -1,4 +1,8 @@
 const mongoose = require('mongoose');
+const path = require('path');
+const fs = require('fs');
+
+let mongodInstance = null;
 
 async function connectDB() {
   const customUri = process.env.MONGO_URI;
@@ -17,13 +21,30 @@ async function connectDB() {
 
   try {
     const { MongoMemoryServer } = require('mongodb-memory-server');
-    const mongod = await MongoMemoryServer.create();
-    const memoryUri = mongod.getUri();
+    const dbPath = path.join(__dirname, '../.tmp_mongo_db');
+    if (!fs.existsSync(dbPath)) {
+      fs.mkdirSync(dbPath, { recursive: true });
+    }
+
+    mongodInstance = await MongoMemoryServer.create({
+      instance: {
+        dbPath
+      }
+    });
+    const memoryUri = mongodInstance.getUri();
     await mongoose.connect(memoryUri);
     console.log('✅ MongoDB In-Memory connected successfully:', memoryUri);
   } catch (err) {
     console.error('❌ Lỗi khởi động MongoDB In-Memory:', err);
+    throw err;
   }
 }
+
+process.on('SIGINT', async () => {
+  if (mongodInstance) {
+    await mongodInstance.stop();
+  }
+  process.exit(0);
+});
 
 module.exports = connectDB;

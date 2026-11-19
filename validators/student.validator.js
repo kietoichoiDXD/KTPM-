@@ -12,6 +12,12 @@ exports.createStudentValidator = [
     .isInt({ min: 1, max: 100 })
     .withMessage('Tuổi phải từ 1 đến 100'),
   
+  body('studentCode')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('Mã sinh viên không được để trống khi cung cấp'),
+
   body('email')
     .optional()
     .isEmail()
@@ -34,7 +40,23 @@ exports.updateStudentValidator = [
     .optional()
     .isInt({ min: 1, max: 100 })
     .withMessage('Tuổi phải từ 1 đến 100'),
+
+  body('studentCode')
+    .optional()
+    .trim(),
   
+  body('email')
+    .optional()
+    .isEmail()
+    .withMessage('Email không hợp lệ'),
+  
+  body('phone')
+    .optional()
+    .matches(/^[0-9]{10,11}$/)
+    .withMessage('Số điện thoại phải có 10-11 chữ số')
+];
+
+exports.updateMeValidator = [
   body('email')
     .optional()
     .isEmail()

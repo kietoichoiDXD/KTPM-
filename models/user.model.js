@@ -15,6 +15,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['USER', 'ADMIN'],
     default: 'USER'
+  },
+  status: {
+    type: String,
+    enum: ['ACTIVE', 'INACTIVE', 'LOCKED'],
+    default: 'ACTIVE'
+  },
+  student: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Student',
+    default: null
   }
 }, {
   timestamps: true

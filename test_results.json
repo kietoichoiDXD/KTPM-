@@ -1,0 +1,506 @@
+{
+  "startTime": "2026-11-13T02:02:09.964Z",
+  "endTime": "2026-11-13T02:02:12.694Z",
+  "duration": "2.73 giây",
+  "summary": {
+    "total": 52,
+    "passed": 52,
+    "failed": 0,
+    "passRate": "100.0%"
+  },
+  "chapters": {
+    "auth": {
+      "name": "🔑 Bot 2: Auth & Header (Xác thực & Phân quyền)",
+      "tests": [
+        {
+          "id": 1,
+          "name": "TC-A01: Đăng ký tài khoản ADMIN mới thành công",
+          "status": "✅ PASS",
+          "expected": "200/201",
+          "actual": "201",
+          "detail": "Đăng ký thành công",
+          "timestamp": "2026-11-13T02:02:12.172Z"
+        },
+        {
+          "id": 2,
+          "name": "TC-A02: Đăng nhập ADMIN → Nhận JWT Token hợp lệ",
+          "status": "✅ PASS",
+          "expected": "200 + token",
+          "actual": "200 + token✓",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.249Z"
+        },
+        {
+          "id": 3,
+          "name": "TC-A03: Đăng nhập USER thường → Nhận JWT Token hợp lệ",
+          "status": "✅ PASS",
+          "expected": "200 + token",
+          "actual": "200",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.394Z"
+        },
+        {
+          "id": 4,
+          "name": "TC-A04: Gọi API không gửi Token → Từ chối 401 Unauthorized",
+          "status": "✅ PASS",
+          "expected": "401",
+          "actual": "401",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.397Z"
+        },
+        {
+          "id": 5,
+          "name": "TC-A05: Token sai chữ ký JWT → Từ chối 401 Unauthorized",
+          "status": "✅ PASS",
+          "expected": "401",
+          "actual": "401",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.401Z"
+        },
+        {
+          "id": 6,
+          "name": "TC-A06: Token rác (không phải JWT) → Từ chối 401",
+          "status": "✅ PASS",
+          "expected": "401",
+          "actual": "401",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.404Z"
+        },
+        {
+          "id": 7,
+          "name": "TC-A07: RBAC - Role USER gọi POST /students → Từ chối 403 Forbidden",
+          "status": "✅ PASS",
+          "expected": "403",
+          "actual": "403",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.407Z"
+        },
+        {
+          "id": 8,
+          "name": "TC-A08: RBAC - Role USER gọi DELETE /students → Từ chối 403 Forbidden",
+          "status": "✅ PASS",
+          "expected": "403",
+          "actual": "403",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.410Z"
+        },
+        {
+          "id": 9,
+          "name": "TC-A09: Đăng nhập sai mật khẩu → Từ chối 400/401",
+          "status": "✅ PASS",
+          "expected": "400/401",
+          "actual": "401",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.483Z"
+        },
+        {
+          "id": 10,
+          "name": "TC-A10: Đăng nhập username không tồn tại → Từ chối 400/401",
+          "status": "✅ PASS",
+          "expected": "400/401",
+          "actual": "401",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.487Z"
+        }
+      ]
+    },
+    "payload": {
+      "name": "🧪 Bot 3: Payload & Boundary (Dữ liệu Biên & Rỗng)",
+      "tests": [
+        {
+          "id": 11,
+          "name": "TC-P01: Body rỗng {} → Phải từ chối 400 Bad Request",
+          "status": "✅ PASS",
+          "expected": "400",
+          "actual": "400",
+          "detail": "Thiếu tất cả trường bắt buộc",
+          "timestamp": "2026-11-13T02:02:12.492Z"
+        },
+        {
+          "id": 12,
+          "name": "TC-P02: Thiếu trường name bắt buộc → Phải từ chối 400",
+          "status": "✅ PASS",
+          "expected": "400",
+          "actual": "400",
+          "detail": "name là trường required",
+          "timestamp": "2026-11-13T02:02:12.494Z"
+        },
+        {
+          "id": 13,
+          "name": "TC-P03: Thiếu trường age bắt buộc → Phải từ chối 400",
+          "status": "✅ PASS",
+          "expected": "400",
+          "actual": "400",
+          "detail": "age là trường required",
+          "timestamp": "2026-11-13T02:02:12.496Z"
+        },
+        {
+          "id": 14,
+          "name": "TC-P04: BVA - Tuổi = 0 (Min-1=0) → Phải từ chối 400",
+          "status": "✅ PASS",
+          "expected": "400",
+          "actual": "400",
+          "detail": "Biên dưới: age min là 1",
+          "timestamp": "2026-11-13T02:02:12.499Z"
+        },
+        {
+          "id": 15,
+          "name": "TC-P05: BVA - Tuổi = 1 (Min=1, hợp lệ) → Phải chấp nhận 201",
+          "status": "✅ PASS",
+          "expected": "201",
+          "actual": "201",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.511Z"
+        },
+        {
+          "id": 16,
+          "name": "TC-P06: BVA - Tuổi = 100 (Max=100, hợp lệ) → Phải chấp nhận 201",
+          "status": "✅ PASS",
+          "expected": "201",
+          "actual": "201",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.530Z"
+        },
+        {
+          "id": 17,
+          "name": "TC-P07: BVA - Tuổi = 101 (Max+1=101) → Phải từ chối 400",
+          "status": "✅ PASS",
+          "expected": "400",
+          "actual": "400",
+          "detail": "Biên trên: age max là 100",
+          "timestamp": "2026-11-13T02:02:12.540Z"
+        },
+        {
+          "id": 18,
+          "name": "TC-P08: Sai kiểu dữ liệu age=\"hai_muoi\" (chuỗi) → Phải từ chối 400",
+          "status": "✅ PASS",
+          "expected": "400",
+          "actual": "400",
+          "detail": "age phải là số nguyên",
+          "timestamp": "2026-11-13T02:02:12.542Z"
+        },
+        {
+          "id": 19,
+          "name": "TC-P09: Email sai định dạng \"khong_phai_email\" → Phải từ chối 400",
+          "status": "✅ PASS",
+          "expected": "400",
+          "actual": "400",
+          "detail": "email phải là địa chỉ email hợp lệ",
+          "timestamp": "2026-11-13T02:02:12.545Z"
+        },
+        {
+          "id": 20,
+          "name": "TC-P10: Số điện thoại \"09012345\" (8 chữ số < 10) → Phải từ chối 400",
+          "status": "✅ PASS",
+          "expected": "400",
+          "actual": "400",
+          "detail": "phone phải có 10-11 chữ số",
+          "timestamp": "2026-11-13T02:02:12.548Z"
+        },
+        {
+          "id": 21,
+          "name": "TC-P11: Tên \"A\" (1 ký tự < min 2) → Phải từ chối 400",
+          "status": "✅ PASS",
+          "expected": "400",
+          "actual": "400",
+          "detail": "name phải có ít nhất 2 ký tự",
+          "timestamp": "2026-11-13T02:02:12.550Z"
+        },
+        {
+          "id": 22,
+          "name": "TC-P12: Happy Path - Dữ liệu hợp lệ đầy đủ → Phải chấp nhận 201",
+          "status": "✅ PASS",
+          "expected": "201 Created",
+          "actual": "201",
+          "detail": "ID: 6af66fa49a69c7f35da4bd1d",
+          "timestamp": "2026-11-13T02:02:12.559Z"
+        },
+        {
+          "id": 23,
+          "name": "TC-P13: Trùng mã SV \"SV_BOT_1794535332487\" → Phải từ chối 400/409",
+          "status": "✅ PASS",
+          "expected": "400/409",
+          "actual": "400",
+          "detail": "studentCode phải là duy nhất",
+          "timestamp": "2026-11-13T02:02:12.562Z"
+        }
+      ]
+    },
+    "restful": {
+      "name": "📋 Bot 4: RESTful & Schema (Mã Trạng thái & Cấu trúc)",
+      "tests": [
+        {
+          "id": 24,
+          "name": "TC-R01: GET /students → 200 OK với dữ liệu hợp lệ",
+          "status": "✅ PASS",
+          "expected": "200",
+          "actual": "200",
+          "detail": "12ms",
+          "timestamp": "2026-11-13T02:02:12.574Z"
+        },
+        {
+          "id": 25,
+          "name": "TC-R02: GET /students → Response Time < 500ms (Hiệu năng)",
+          "status": "✅ PASS",
+          "expected": "< 500ms",
+          "actual": "12ms",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.574Z"
+        },
+        {
+          "id": 26,
+          "name": "TC-R03: GET /students/:id (ID hợp lệ) → 200 OK",
+          "status": "✅ PASS",
+          "expected": "200",
+          "actual": "200",
+          "detail": "ID: 6af66fa49a69c7f35da4bd1d",
+          "timestamp": "2026-11-13T02:02:12.578Z"
+        },
+        {
+          "id": 27,
+          "name": "TC-R04: GET /students/507f...9011 (ID không tồn tại) → 404 Not Found",
+          "status": "✅ PASS",
+          "expected": "404",
+          "actual": "404",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.581Z"
+        },
+        {
+          "id": 28,
+          "name": "TC-R05: GET /students/INVALID_ID (format sai) → 400/404/500",
+          "status": "✅ PASS",
+          "expected": "400/404",
+          "actual": "400",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.584Z"
+        },
+        {
+          "id": 29,
+          "name": "TC-R06: PUT /students/:id (dữ liệu hợp lệ) → 200 OK",
+          "status": "✅ PASS",
+          "expected": "200",
+          "actual": "200",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.592Z"
+        },
+        {
+          "id": 30,
+          "name": "TC-R07: PUT /students/:id (age=999 > 100) → 400 Bad Request",
+          "status": "✅ PASS",
+          "expected": "400",
+          "actual": "400",
+          "detail": "validator age max=100",
+          "timestamp": "2026-11-13T02:02:12.594Z"
+        },
+        {
+          "id": 31,
+          "name": "TC-R08: Role USER được phép GET /students → 200 OK",
+          "status": "✅ PASS",
+          "expected": "200",
+          "actual": "200",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.601Z"
+        },
+        {
+          "id": 32,
+          "name": "TC-R09: Response body là JSON object hợp lệ",
+          "status": "✅ PASS",
+          "expected": "JSON object",
+          "actual": "object",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.610Z"
+        },
+        {
+          "id": 33,
+          "name": "TC-R10: Content-Type phản hồi phải là application/json",
+          "status": "✅ PASS",
+          "expected": "application/json",
+          "actual": "application/json",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.610Z"
+        },
+        {
+          "id": 34,
+          "name": "TC-R11: GET /health → 200 OK (Server Health Check)",
+          "status": "✅ PASS",
+          "expected": "200",
+          "actual": "200",
+          "detail": "2ms",
+          "timestamp": "2026-11-13T02:02:12.612Z"
+        },
+        {
+          "id": 35,
+          "name": "TC-R12: DELETE /students/:id hợp lệ → 200 OK",
+          "status": "✅ PASS",
+          "expected": "200",
+          "actual": "200",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.620Z"
+        },
+        {
+          "id": 36,
+          "name": "TC-R13: GET /students/:id sau khi DELETE → 404 Not Found",
+          "status": "✅ PASS",
+          "expected": "404",
+          "actual": "404",
+          "detail": "Dữ liệu đã bị xóa phải trả về 404",
+          "timestamp": "2026-11-13T02:02:12.624Z"
+        }
+      ]
+    },
+    "database": {
+      "name": "💾 Bot 5: Database Inspector (Đối soát Cơ sở dữ liệu)",
+      "tests": [
+        {
+          "id": 37,
+          "name": "TC-D01: API POST /students 201 → Bản ghi tồn tại trong MongoDB",
+          "status": "✅ PASS",
+          "expected": "Record exists",
+          "actual": "Found ✓",
+          "detail": "_id: 6af66fa49a69c7f35da4bd34",
+          "timestamp": "2026-11-13T02:02:12.633Z"
+        },
+        {
+          "id": 38,
+          "name": "TC-D02: studentCode trong DB khớp với payload đã gửi",
+          "status": "✅ PASS",
+          "expected": "DB_VERIFY_1794535332624",
+          "actual": "DB_VERIFY_1794535332624",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.633Z"
+        },
+        {
+          "id": 39,
+          "name": "TC-D03: isDeleted trong DB = false (Chưa bị xóa)",
+          "status": "✅ PASS",
+          "expected": "false",
+          "actual": "false",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.633Z"
+        },
+        {
+          "id": 40,
+          "name": "TC-D04: createdAt được tự động tạo bởi MongoDB timestamps",
+          "status": "✅ PASS",
+          "expected": "Date object",
+          "actual": "object",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.633Z"
+        },
+        {
+          "id": 41,
+          "name": "TC-D05: Sau PUT API → Trường name trong DB được cập nhật đúng",
+          "status": "✅ PASS",
+          "expected": "DB Inspector Updated",
+          "actual": "DB Inspector Updated",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.642Z"
+        },
+        {
+          "id": 42,
+          "name": "TC-D06: Sau PUT API → Trường age trong DB được cập nhật đúng",
+          "status": "✅ PASS",
+          "expected": "26",
+          "actual": "26",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.642Z"
+        },
+        {
+          "id": 43,
+          "name": "TC-D07: Sau PUT API → updatedAt trong DB được tự động cập nhật",
+          "status": "✅ PASS",
+          "expected": "Date updated",
+          "actual": "object",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.642Z"
+        },
+        {
+          "id": 44,
+          "name": "TC-D08: Sau DELETE API → Bản ghi bị Soft Delete (isDeleted=true)",
+          "status": "✅ PASS",
+          "expected": "isDeleted=true hoặc null",
+          "actual": "isDeleted=true (Soft Delete ✓)",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.648Z"
+        },
+        {
+          "id": 45,
+          "name": "TC-D09: Sau DELETE → GET /students/:id phải trả về 404",
+          "status": "✅ PASS",
+          "expected": "404",
+          "actual": "404",
+          "detail": "API không được hiển thị dữ liệu đã bị xóa",
+          "timestamp": "2026-11-13T02:02:12.652Z"
+        }
+      ]
+    },
+    "workflow": {
+      "name": "🔄 Kiểm thử Luồng Nghiệp vụ E2E (End-to-End)",
+      "tests": [
+        {
+          "id": 46,
+          "name": "E2E-01 Bước 1/5: Tạo sinh viên mới (POST /students → 201)",
+          "status": "✅ PASS",
+          "expected": "201",
+          "actual": "201",
+          "detail": "ID: 6af66fa49a69c7f35da4bd42",
+          "timestamp": "2026-11-13T02:02:12.660Z"
+        },
+        {
+          "id": 47,
+          "name": "E2E-01 Bước 2/5: Đọc thông tin sinh viên (GET /students/:id → 200)",
+          "status": "✅ PASS",
+          "expected": "200",
+          "actual": "200",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.663Z"
+        },
+        {
+          "id": 48,
+          "name": "E2E-01 Bước 3/5: Cập nhật thông tin (PUT /students/:id → 200)",
+          "status": "✅ PASS",
+          "expected": "200",
+          "actual": "200",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.670Z"
+        },
+        {
+          "id": 49,
+          "name": "E2E-01 Bước 4/5: Xóa sinh viên (DELETE /students/:id → 200)",
+          "status": "✅ PASS",
+          "expected": "200",
+          "actual": "200",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.676Z"
+        },
+        {
+          "id": 50,
+          "name": "E2E-01 Bước 5/5: Xác nhận sau xóa (GET → 404 Not Found)",
+          "status": "✅ PASS",
+          "expected": "404",
+          "actual": "404",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.680Z"
+        },
+        {
+          "id": 51,
+          "name": "E2E-02: Idempotency - GET /students 2 lần liên tiếp → Cùng status",
+          "status": "✅ PASS",
+          "expected": "Cùng 200",
+          "actual": "200 vs 200",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.694Z"
+        },
+        {
+          "id": 52,
+          "name": "E2E-03: GET /students → Dữ liệu phải là mảng (Array)",
+          "status": "✅ PASS",
+          "expected": "Array",
+          "actual": "object",
+          "detail": "",
+          "timestamp": "2026-11-13T02:02:12.694Z"
+        }
+      ]
+    }
+  }
+}
