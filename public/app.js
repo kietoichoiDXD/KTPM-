@@ -1,5 +1,34 @@
 // ===================== CONFIG =====================
-const API = '';  // relative URL (served from same origin)
+function getApiEndpoint() {
+  const saved = localStorage.getItem('api_endpoint');
+  if (saved && saved.trim() !== '') return saved.trim().replace(/\/+$/, '');
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return window.location.port === '5000' ? '' : 'http://localhost:5000';
+  }
+  return 'http://localhost:5000';
+}
+let API = getApiEndpoint();
+
+function updateApiLabel() {
+  const el = document.getElementById('lblApiEndpoint');
+  if (el) el.textContent = API || (window.location.origin);
+}
+
+function promptApiEndpoint() {
+  const current = API || window.location.origin;
+  const input = prompt('Nhập địa chỉ Backend API (VD: http://localhost:5000 hoặc link Render/Cloud):', current);
+  if (input !== null) {
+    if (input.trim() === '' || input.trim() === window.location.origin) {
+      localStorage.removeItem('api_endpoint');
+    } else {
+      localStorage.setItem('api_endpoint', input.trim().replace(/\/+$/, ''));
+    }
+    API = getApiEndpoint();
+    updateApiLabel();
+    alert('Đã cập nhật máy chủ kết nối: ' + (API || window.location.origin));
+  }
+}
+
 let token = localStorage.getItem('token');
 let currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
 let allStudents = [];
@@ -9,6 +38,7 @@ let chartAge = null;
 
 // ===================== INIT =====================
 window.addEventListener('DOMContentLoaded', () => {
+  updateApiLabel();
   if (token && currentUser) {
     enterApp();
   }
@@ -46,7 +76,7 @@ async function doLogin() {
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
     enterApp();
   } catch (err) {
-    showLoginError('Không thể kết nối server. Kiểm tra backend đang chạy tại port 5000.');
+    showLoginError(`Không thể kết nối Backend (${API || 'localhost'}). Hãy chắc chắn Backend đang bật hoặc bấm 'Đổi' bên dưới để cấu hình URL.`);
   }
 }
 

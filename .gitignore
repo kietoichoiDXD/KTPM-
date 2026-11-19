@@ -48,3 +48,7 @@ dist/
 
 # Temporary In-Memory MongoDB data
 .tmp_mongo_db/
+
+.vercel
+
+.firebase/

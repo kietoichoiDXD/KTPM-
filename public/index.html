@@ -46,12 +46,21 @@
       </button>
       <div class="border-t pt-4">
         <p class="text-xs text-gray-500 text-center mb-2">Đăng nhập nhanh:</p>
-        <div class="flex gap-2">
+        <div class="flex gap-2 mb-3">
           <button onclick="quickLogin('admin','admin123')" class="flex-1 bg-gradient-to-r from-orange-500 to-red-500 hover:opacity-90 text-white text-xs font-semibold py-2 rounded-lg transition">
             <i class="fas fa-crown mr-1"></i>ADMIN
           </button>
           <button onclick="quickLogin('user','user123')" class="flex-1 bg-gradient-to-r from-green-500 to-teal-500 hover:opacity-90 text-white text-xs font-semibold py-2 rounded-lg transition">
             <i class="fas fa-user mr-1"></i>USER
+          </button>
+        </div>
+        <div class="bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-xs text-gray-600 flex items-center justify-between">
+          <div class="truncate mr-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-green-500 mr-1.5 animate-pulse"></span>
+            <span>API: <strong id="lblApiEndpoint" class="text-blue-600 font-mono">http://localhost:5000</strong></span>
+          </div>
+          <button type="button" onclick="promptApiEndpoint()" class="text-blue-600 hover:underline font-medium whitespace-nowrap">
+            <i class="fas fa-cog mr-0.5"></i>Đổi URL
           </button>
         </div>
       </div>
